@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Clock</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        transition: 0.4s;
+    }
+
+    .clock-card {
+        width: 90%;
+        max-width: 450px;
+        padding: 40px 25px;
+        text-align: center;
+        color: white;
+        background: rgba(255,255,255,0.15);
+        border: 1px solid rgba(255,255,255,0.25);
+        border-radius: 25px;
+        backdrop-filter: blur(15px);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    .greeting {
+        font-size: 18px;
+        margin-bottom: 25px;
+        opacity: 0.9;
+    }
+
+    .time {
+        font-size: 52px;
+        font-weight: bold;
+        letter-spacing: 3px;
+        margin-bottom: 15px;
+    }
+
+    .date {
+        font-size: 18px;
+        opacity: 0.9;
+        margin-bottom: 30px;
+    }
+
+    button {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 25px;
+        background: white;
+        color: #5b4bb7;
+        font-size: 15px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        transform: scale(1.05);
+    }
+
+    body.dark {
+        background: linear-gradient(135deg, #141e30, #243b55);
+    }
+</style>
+</head>
+
+<body>
+
+<div class="clock-card">
+    <h1>✨ My Digital Clock</h1>
+    <div class="greeting" id="greeting">Good Morning!</div>
+
+    <div class="time" id="time">00:00:00</div>
+    <div class="date" id="date">Loading...</div>
+
+    <button onclick="toggleDarkMode()">🌙 Toggle Dark Mode</button>
+</div>
+
+<script>
+function updateClock() {
+    const now = new Date();
+
+    let hours = now.getHours();
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    let greeting = "Good Morning!";
+
+    if (hours >= 12 && hours < 17) {
+        greeting = "Good Afternoon!";
+    } else if (hours >= 17) {
+        greeting = "Good Evening!";
+    }
+
+    let displayHours = hours % 12 || 12;
+    let ampm = hours >= 12 ? "PM" : "AM";
+
+    document.getElementById("time").textContent =
+        `${String(displayHours).padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
+
+    document.getElementById("greeting").textContent = greeting;
+
+    document.getElementById("date").textContent =
+        now.toLocaleDateString('en-IN', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+}
+
+function toggleDarkMode() {
+    document.body.classList.toggle("dark");
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+</script>
+
+</body>
+</html>
