@@ -7,202 +7,135 @@
 <title>Memory Master</title>
 
 <style>
-
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-:root {
-    --bg1: #0f172a;
-    --bg2: #1e293b;
-    --card: #334155;
-    --accent: #38bdf8;
-    --accent2: #818cf8;
-    --success: #22c55e;
-    --danger: #ef4444;
-    --white: #ffffff;
 }
 
 body {
+    margin: 0;
     min-height: 100vh;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, sans-serif;
     color: white;
-
-    background:
-        radial-gradient(circle at top left, #1e3a8a, transparent 35%),
-        radial-gradient(circle at bottom right, #312e81, transparent 35%),
-        linear-gradient(135deg, var(--bg1), var(--bg2));
-
+    background: linear-gradient(135deg, #0f172a, #312e81);
     padding: 20px;
 }
 
-/* -----------------------------
-   Main container
------------------------------- */
-
 .container {
-    max-width: 1100px;
+    max-width: 900px;
     margin: auto;
 }
 
-header {
+h1 {
     text-align: center;
-    margin-bottom: 20px;
-}
-
-.logo {
-    font-size: 42px;
-    font-weight: 800;
-    letter-spacing: 1px;
+    margin: 5px 0;
+    font-size: 36px;
 }
 
 .subtitle {
+    text-align: center;
     color: #cbd5e1;
-    margin-top: 5px;
+    margin-bottom: 20px;
 }
 
-/* -----------------------------
-   Player section
------------------------------- */
+/* PLAYER */
 
-.player-panel {
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 18px;
-    padding: 18px;
-    margin-bottom: 18px;
-
+.player {
     display: flex;
-    gap: 12px;
-    align-items: center;
+    gap: 10px;
     justify-content: center;
+    margin-bottom: 15px;
 }
 
-.player-panel input {
+.player input {
     width: 250px;
-    padding: 12px 15px;
-
-    border: none;
-    outline: none;
-
-    border-radius: 10px;
-
+    padding: 12px;
+    border: 0;
+    border-radius: 8px;
     font-size: 16px;
 }
 
-/* -----------------------------
-   Level buttons
------------------------------- */
+/* BUTTONS */
+
+button {
+    border: 0;
+    border-radius: 8px;
+    padding: 11px 18px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.new-game {
+    background: #22c55e;
+    color: white;
+}
 
 .levels {
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-bottom: 18px;
     flex-wrap: wrap;
+    margin-bottom: 15px;
 }
 
-.level-btn {
-    padding: 11px 22px;
-
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.2);
-
-    background: rgba(255,255,255,0.08);
+.level {
+    background: #334155;
     color: white;
-
-    cursor: pointer;
-    font-weight: bold;
-
-    transition: 0.25s;
 }
 
-.level-btn:hover {
-    transform: translateY(-2px);
-    background: rgba(255,255,255,0.16);
+.level.active {
+    background: #3b82f6;
 }
 
-.level-btn.active {
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    border-color: transparent;
-}
-
-/* -----------------------------
-   Stats
------------------------------- */
+/* STATS */
 
 .stats {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
-    margin-bottom: 18px;
+    margin-bottom: 15px;
 }
 
 .stat {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.1);
-
-    border-radius: 14px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
     padding: 12px;
-
     text-align: center;
 }
 
-.stat-label {
-    font-size: 12px;
+.stat small {
     color: #cbd5e1;
 }
 
-.stat-value {
-    font-size: 22px;
-    font-weight: bold;
+.stat strong {
+    display: block;
+    font-size: 21px;
     margin-top: 4px;
 }
 
-/* -----------------------------
-   Game board
------------------------------- */
-
-.board-wrapper {
-    width: min(90vw, 700px);
-    margin: auto;
-}
+/* BOARD */
 
 .board {
-    display: grid;
-
-    gap: 8px;
-
-    width: 100%;
+    width: min(90vw, 700px);
     aspect-ratio: 1 / 1;
+    margin: auto;
+
+    display: grid;
+    gap: 7px;
 }
 
-/* -----------------------------
-   Cards
------------------------------- */
+/* CARD */
 
 .card {
-    perspective: 900px;
+    perspective: 800px;
     cursor: pointer;
 }
 
-.card.disabled {
-    cursor: default;
-}
-
 .card-inner {
-    position: relative;
-
     width: 100%;
     height: 100%;
-
+    position: relative;
     transform-style: preserve-3d;
-
-    transition:
-        transform 0.55s cubic-bezier(.2,.8,.2,1);
+    transition: transform 0.5s;
 }
 
 .card.flipped .card-inner,
@@ -213,11 +146,10 @@ header {
 .card-front,
 .card-back {
     position: absolute;
-
     width: 100%;
     height: 100%;
 
-    border-radius: 12px;
+    border-radius: 8px;
 
     display: flex;
     align-items: center;
@@ -227,195 +159,65 @@ header {
     -webkit-backface-visibility: hidden;
 }
 
-/* Card front */
-
 .card-front {
-    background:
-        linear-gradient(
-            135deg,
-            #334155,
-            #475569
-        );
-
-    border: 2px solid rgba(255,255,255,0.12);
-
-    box-shadow:
-        0 5px 15px rgba(0,0,0,0.2);
-
-    font-size: clamp(14px, 4vw, 30px);
-
-    position: relative;
-    overflow: hidden;
+    background: #475569;
+    border: 2px solid #64748b;
+    font-size: 25px;
 }
-
-.card-front::before {
-    content: "";
-    position: absolute;
-
-    width: 140%;
-    height: 40%;
-
-    background: rgba(255,255,255,0.08);
-
-    transform: rotate(-35deg);
-}
-
-.card-front span {
-    z-index: 2;
-}
-
-/* Card back */
 
 .card-back {
     background: white;
-
     color: #111827;
-
     transform: rotateY(180deg);
-
-    font-size: clamp(18px, 5vw, 38px);
-
-    box-shadow:
-        0 5px 20px rgba(0,0,0,0.25);
+    font-size: clamp(20px, 5vw, 40px);
 }
-
-/* Hover */
-
-.card:not(.disabled):not(.matched):hover {
-    transform: translateY(-3px);
-}
-
-.card:not(.disabled):not(.matched):hover
-.card-inner {
-    transform: scale(1.03);
-}
-
-/* Matched */
 
 .card.matched .card-back {
-    background: #dcfce7;
-
-    border: 3px solid var(--success);
-
-    animation: matchPulse 0.5s ease;
+    background: #bbf7d0;
+    border: 3px solid #22c55e;
 }
 
-@keyframes matchPulse {
-
-    0% {
-        transform: rotateY(180deg) scale(1);
-    }
-
-    50% {
-        transform: rotateY(180deg) scale(1.12);
-    }
-
-    100% {
-        transform: rotateY(180deg) scale(1);
-    }
-}
-
-/* Wrong */
-
-.card.wrong .card-inner {
-    animation: shake 0.4s;
-}
-
-@keyframes shake {
-
-    0%,100% {
-        transform: translateX(0);
-    }
-
-    25% {
-        transform: translateX(-7px);
-    }
-
-    75% {
-        transform: translateX(7px);
-    }
-}
-
-/* -----------------------------
-   Buttons
------------------------------- */
+/* CONTROLS */
 
 .controls {
     text-align: center;
-    margin-top: 18px;
+    margin: 15px;
 }
 
-.btn {
-    border: none;
-
-    padding: 12px 24px;
-
-    border-radius: 10px;
-
-    cursor: pointer;
-
-    font-size: 15px;
-    font-weight: bold;
-
-    color: white;
-
+.controls button {
     margin: 5px;
-
-    transition: 0.25s;
 }
 
 .restart {
-    background: linear-gradient(
-        135deg,
-        #3b82f6,
-        #6366f1
-    );
+    background: #6366f1;
+    color: white;
 }
 
 .sound {
-    background: rgba(255,255,255,0.1);
+    background: #475569;
+    color: white;
 }
 
-.btn:hover {
-    transform: translateY(-2px);
-}
-
-/* -----------------------------
-   Message
------------------------------- */
+/* MESSAGE */
 
 .message {
-    min-height: 30px;
-
     text-align: center;
-
-    margin-top: 15px;
-
-    font-size: 18px;
-    font-weight: bold;
-
+    min-height: 25px;
     color: #86efac;
+    font-weight: bold;
 }
 
-/* -----------------------------
-   Leaderboard
------------------------------- */
+/* LEADERBOARD */
 
 .leaderboard {
-    margin-top: 30px;
-
+    margin-top: 25px;
     background: rgba(255,255,255,0.08);
-
-    border: 1px solid rgba(255,255,255,0.1);
-
-    border-radius: 18px;
-
-    padding: 20px;
+    padding: 15px;
+    border-radius: 12px;
 }
 
 .leaderboard h2 {
     text-align: center;
-    margin-bottom: 15px;
 }
 
 table {
@@ -425,11 +227,8 @@ table {
 
 th,
 td {
-    padding: 10px;
-
-    border-bottom:
-        1px solid rgba(255,255,255,0.1);
-
+    padding: 9px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
     text-align: center;
 }
 
@@ -437,25 +236,15 @@ th {
     color: #93c5fd;
 }
 
-.empty {
-    text-align: center;
-    color: #94a3b8;
-    padding: 20px;
-}
-
-/* -----------------------------
-   Victory modal
------------------------------- */
+/* MODAL */
 
 .modal {
     position: fixed;
-
     inset: 0;
 
     background: rgba(0,0,0,0.7);
 
     display: none;
-
     align-items: center;
     justify-content: center;
 
@@ -467,146 +256,63 @@ th {
 }
 
 .modal-box {
-    width: min(90%, 450px);
-
-    background:
-        linear-gradient(
-            145deg,
-            #1e293b,
-            #312e81
-        );
-
-    border-radius: 22px;
-
-    padding: 35px;
-
+    background: #1e293b;
+    width: min(90%, 400px);
+    padding: 30px;
+    border-radius: 15px;
     text-align: center;
-
-    box-shadow:
-        0 20px 70px rgba(0,0,0,0.5);
-
-    animation: modalIn 0.5s ease;
-}
-
-@keyframes modalIn {
-
-    from {
-        transform: scale(0.6);
-        opacity: 0;
-    }
-
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
 }
 
 .trophy {
-    font-size: 70px;
-
-    animation:
-        trophyBounce 1s infinite alternate;
+    font-size: 60px;
 }
 
-@keyframes trophyBounce {
-
-    from {
-        transform: translateY(0);
-    }
-
-    to {
-        transform: translateY(-10px);
-    }
+.modal-box button {
+    margin-top: 15px;
+    background: #22c55e;
+    color: white;
 }
 
-.modal-box h2 {
-    font-size: 30px;
-    margin: 10px 0;
-}
+/* MOBILE */
 
-.result {
-    line-height: 1.8;
-    color: #dbeafe;
-}
-
-/* -----------------------------
-   Confetti
------------------------------- */
-
-.confetti {
-    position: fixed;
-
-    width: 10px;
-    height: 14px;
-
-    top: -20px;
-
-    z-index: 200;
-
-    animation:
-        confettiFall linear forwards;
-}
-
-@keyframes confettiFall {
-
-    to {
-        transform:
-            translateY(110vh)
-            rotate(720deg);
-    }
-}
-
-/* -----------------------------
-   Mobile
------------------------------- */
-
-@media (max-width: 600px) {
+@media(max-width:600px) {
 
     body {
         padding: 10px;
     }
 
-    .logo {
-        font-size: 32px;
+    h1 {
+        font-size: 28px;
     }
 
-    .player-panel {
+    .player {
         flex-direction: column;
     }
 
-    .player-panel input {
+    .player input {
         width: 100%;
     }
 
     .stats {
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
-
-    .board-wrapper {
-        width: 96vw;
+        grid-template-columns: repeat(2,1fr);
     }
 
     .board {
+        width: 96vw;
         gap: 4px;
     }
 
     .card-front,
     .card-back {
-        border-radius: 7px;
-    }
-
-    .leaderboard {
-        padding: 10px;
+        border-radius: 5px;
     }
 
     th,
     td {
-        padding: 7px 3px;
         font-size: 12px;
+        padding: 6px 2px;
     }
 }
-
 </style>
 </head>
 
@@ -614,32 +320,25 @@ th {
 
 <div class="container">
 
-    <header>
+    <h1>🧠 Memory Master</h1>
 
-        <div class="logo">
-            🧠 Memory Master
-        </div>
+    <div class="subtitle">
+        Test your memory and beat your high score
+    </div>
 
-        <div class="subtitle">
-            Train your memory • Beat your best score
-        </div>
+    <!-- PLAYER -->
 
-    </header>
-
-
-    <!-- Player -->
-
-    <div class="player-panel">
+    <div class="player">
 
         <input
             id="playerName"
             type="text"
+            placeholder="Enter player name"
             maxlength="20"
-            placeholder="Enter your name"
         >
 
         <button
-            class="btn restart"
+            class="new-game"
             onclick="startGame()"
         >
             🎮 New Game
@@ -648,117 +347,70 @@ th {
     </div>
 
 
-    <!-- Levels -->
+    <!-- LEVELS -->
 
     <div class="levels">
 
         <button
-            class="level-btn active"
+            class="level active"
             data-size="4"
-            onclick="changeLevel(4)"
+            onclick="selectLevel(4)"
         >
-            🟢 Easy 4×4
+            🟢 4 × 4
         </button>
 
         <button
-            class="level-btn"
+            class="level"
             data-size="6"
-            onclick="changeLevel(6)"
+            onclick="selectLevel(6)"
         >
-            🟡 Medium 6×6
+            🟡 6 × 6
         </button>
 
         <button
-            class="level-btn"
+            class="level"
             data-size="8"
-            onclick="changeLevel(8)"
+            onclick="selectLevel(8)"
         >
-            🔴 Hard 8×8
+            🔴 8 × 8
         </button>
 
     </div>
 
 
-    <!-- Statistics -->
+    <!-- STATS -->
 
     <div class="stats">
 
         <div class="stat">
-
-            <div class="stat-label">
-                MOVES
-            </div>
-
-            <div
-                id="moves"
-                class="stat-value"
-            >
-                0
-            </div>
-
+            <small>Moves</small>
+            <strong id="moves">0</strong>
         </div>
 
-
         <div class="stat">
-
-            <div class="stat-label">
-                MATCHES
-            </div>
-
-            <div
-                id="matches"
-                class="stat-value"
-            >
-                0
-            </div>
-
+            <small>Matches</small>
+            <strong id="matches">0</strong>
         </div>
 
-
         <div class="stat">
-
-            <div class="stat-label">
-                TIME
-            </div>
-
-            <div
-                id="timer"
-                class="stat-value"
-            >
-                00:00
-            </div>
-
+            <small>Time</small>
+            <strong id="time">00:00</strong>
         </div>
 
-
         <div class="stat">
-
-            <div class="stat-label">
-                ACCURACY
-            </div>
-
-            <div
-                id="accuracy"
-                class="stat-value"
-            >
-                100%
-            </div>
-
+            <small>Accuracy</small>
+            <strong id="accuracy">100%</strong>
         </div>
 
     </div>
 
 
-    <!-- Game -->
+    <!-- GAME BOARD -->
 
-    <div class="board-wrapper">
-
-        <div
-            id="gameBoard"
-            class="board"
-        ></div>
-
-    </div>
+    <div
+        id="board"
+        class="board"
+    ></div>
 
 
     <div
@@ -767,12 +419,12 @@ th {
     ></div>
 
 
-    <!-- Controls -->
+    <!-- CONTROLS -->
 
     <div class="controls">
 
         <button
-            class="btn restart"
+            class="restart"
             onclick="startGame()"
         >
             🔄 Restart
@@ -780,7 +432,7 @@ th {
 
         <button
             id="soundButton"
-            class="btn sound"
+            class="sound"
             onclick="toggleSound()"
         >
             🔊 Sound ON
@@ -789,30 +441,26 @@ th {
     </div>
 
 
-    <!-- Leaderboard -->
+    <!-- LEADERBOARD -->
 
     <div class="leaderboard">
 
-        <h2>
-            🏆 High Scores
-        </h2>
+        <h2>🏆 High Scores</h2>
 
         <table>
 
             <thead>
-
                 <tr>
-                    <th>Rank</th>
+                    <th>#</th>
                     <th>Player</th>
                     <th>Level</th>
                     <th>Moves</th>
                     <th>Time</th>
                     <th>Score</th>
                 </tr>
-
             </thead>
 
-            <tbody id="scoreTable"></tbody>
+            <tbody id="scores"></tbody>
 
         </table>
 
@@ -821,10 +469,10 @@ th {
 </div>
 
 
-<!-- Victory Modal -->
+<!-- WIN MODAL -->
 
 <div
-    id="victoryModal"
+    id="modal"
     class="modal"
 >
 
@@ -834,19 +482,11 @@ th {
             🏆
         </div>
 
-        <h2>
-            Congratulations!
-        </h2>
+        <h2>Congratulations!</h2>
 
-        <div
-            id="result"
-            class="result"
-        ></div>
+        <div id="result"></div>
 
-        <button
-            class="btn restart"
-            onclick="closeModal(); startGame();"
-        >
+        <button onclick="closeModal(); startGame();">
             🎮 Play Again
         </button>
 
@@ -857,12 +497,11 @@ th {
 
 <script>
 
-/* =====================================================
-   GAME DATA
-===================================================== */
+/* ==========================================
+   GAME SETTINGS
+========================================== */
 
-const symbols = [
-
+const emojis = [
     "🍎","🍌","🍇","🍉",
     "🍊","🍋","🍓","🍒",
     "🥝","🍍","🥭","🍑",
@@ -870,331 +509,147 @@ const symbols = [
     "🌽","🥔","🍔","🍕",
     "🍩","🍪","🍰","🎂",
     "⚽","🏀","🏈","⚾",
-    "🚗","✈️","🚀","🎸",
-    "🎹","🎺","🎻","🥁"
+    "🚗","✈️","🚀","🎸"
 ];
 
-
-/* =====================================================
-   VARIABLES
-===================================================== */
-
 let level = 4;
-
-let cards = [];
 
 let firstCard = null;
 let secondCard = null;
 
-let lockBoard = false;
+let locked = false;
 
 let moves = 0;
 let matches = 0;
 
 let seconds = 0;
 
-let timerInterval = null;
+let timer = null;
 
-let gameStarted = false;
+let soundOn = true;
 
-let soundEnabled = true;
-
-
-/* =====================================================
-   AUDIO
-===================================================== */
-
-let audioContext = null;
+let audio = null;
 
 
-function playSound(type) {
+/* ==========================================
+   SELECT LEVEL
+========================================== */
 
-    if (!soundEnabled)
-        return;
-
-    try {
-
-        if (!audioContext) {
-
-            audioContext =
-                new (
-                    window.AudioContext ||
-                    window.webkitAudioContext
-                )();
-
-        }
-
-        const oscillator =
-            audioContext.createOscillator();
-
-        const gain =
-            audioContext.createGain();
-
-        oscillator.connect(gain);
-
-        gain.connect(audioContext.destination);
-
-
-        let frequency = 400;
-
-        let duration = 0.08;
-
-
-        if (type === "flip") {
-
-            frequency = 500;
-            duration = 0.06;
-
-        }
-
-        if (type === "match") {
-
-            frequency = 750;
-            duration = 0.15;
-
-        }
-
-        if (type === "wrong") {
-
-            frequency = 180;
-            duration = 0.18;
-
-        }
-
-        if (type === "win") {
-
-            frequency = 900;
-            duration = 0.5;
-
-        }
-
-
-        oscillator.frequency.value =
-            frequency;
-
-        oscillator.type = "sine";
-
-
-        gain.gain.setValueAtTime(
-            0.001,
-            audioContext.currentTime
-        );
-
-        gain.gain.exponentialRampToValueAtTime(
-            0.2,
-            audioContext.currentTime + 0.01
-        );
-
-        gain.gain.exponentialRampToValueAtTime(
-            0.001,
-            audioContext.currentTime + duration
-        );
-
-
-        oscillator.start();
-
-        oscillator.stop(
-            audioContext.currentTime + duration
-        );
-
-    }
-
-    catch (error) {
-
-        console.log("Audio unavailable");
-
-    }
-}
-
-
-/* =====================================================
-   TOGGLE SOUND
-===================================================== */
-
-function toggleSound() {
-
-    soundEnabled = !soundEnabled;
-
-    document.getElementById(
-        "soundButton"
-    ).textContent =
-        soundEnabled
-            ? "🔊 Sound ON"
-            : "🔇 Sound OFF";
-}
-
-
-/* =====================================================
-   CHANGE LEVEL
-===================================================== */
-
-function changeLevel(size) {
+function selectLevel(size) {
 
     level = size;
 
-    document.querySelectorAll(
-        ".level-btn"
-    ).forEach(button => {
+    document.querySelectorAll(".level")
+        .forEach(button => {
 
-        button.classList.remove("active");
+            button.classList.remove("active");
 
-        if (
-            Number(button.dataset.size)
-            === size
-        ) {
+            if (
+                Number(button.dataset.size)
+                === size
+            ) {
+                button.classList.add("active");
+            }
 
-            button.classList.add("active");
-
-        }
-
-    });
+        });
 
     startGame();
 }
 
 
-/* =====================================================
+/* ==========================================
    START GAME
-===================================================== */
+========================================== */
 
 function startGame() {
 
-    const board =
-        document.getElementById(
-            "gameBoard"
-        );
-
-    board.innerHTML = "";
-
-    clearInterval(timerInterval);
-
+    clearInterval(timer);
 
     firstCard = null;
     secondCard = null;
 
-    lockBoard = false;
+    locked = false;
 
     moves = 0;
     matches = 0;
-
     seconds = 0;
-
-    gameStarted = false;
-
 
     updateStats();
 
+    document.getElementById("message")
+        .textContent = "";
 
-    document.getElementById(
-        "message"
-    ).textContent = "";
+    const board =
+        document.getElementById("board");
 
-
-    /*
-       Number of cards:
-       4x4 = 16
-       6x6 = 36
-       8x8 = 64
-    */
-
-    const totalCards =
-        level * level;
-
-    const pairCount =
-        totalCards / 2;
-
-
-    /*
-       Select required symbols
-    */
-
-    let selected =
-        symbols.slice(
-            0,
-            pairCount
-        );
-
-
-    /*
-       Create pairs
-    */
-
-    cards = [
-        ...selected,
-        ...selected
-    ];
-
-
-    /*
-       Shuffle
-    */
-
-    shuffle(cards);
-
-
-    /*
-       Set grid
-    */
+    board.innerHTML = "";
 
     board.style.gridTemplateColumns =
         `repeat(${level}, 1fr)`;
 
 
     /*
-       Create cards
+       Example:
+
+       4 × 4 = 16 cards = 8 pairs
+       6 × 6 = 36 cards = 18 pairs
+       8 × 8 = 64 cards = 32 pairs
     */
 
-    cards.forEach(
-        (symbol, index) => {
+    const numberOfPairs =
+        (level * level) / 2;
+
+
+    let selected =
+        emojis.slice(0, numberOfPairs);
+
+
+    let gameCards =
+        [...selected, ...selected];
+
+
+    shuffle(gameCards);
+
+
+    gameCards.forEach(
+        (emoji, index) => {
 
             const card =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             card.className = "card";
 
-            card.dataset.symbol =
-                symbol;
-
-            card.dataset.index =
-                index;
-
+            card.dataset.value = emoji;
 
             card.innerHTML = `
-
                 <div class="card-inner">
 
                     <div class="card-front">
-                        <span>?</span>
+                        ?
                     </div>
 
                     <div class="card-back">
-                        ${symbol}
+                        ${emoji}
                     </div>
 
                 </div>
-
             `;
 
-
-            card.addEventListener(
-                "click",
-                () => flipCard(card)
-            );
-
+            card.onclick =
+                function() {
+                    flipCard(card);
+                };
 
             board.appendChild(card);
 
         }
     );
-
 }
 
 
-/* =====================================================
+/* ==========================================
    SHUFFLE
-===================================================== */
+========================================== */
 
 function shuffle(array) {
 
@@ -1209,81 +664,51 @@ function shuffle(array) {
                 Math.random() * (i + 1)
             );
 
-        [
-            array[i],
-            array[j]
-        ] =
-        [
-            array[j],
-            array[i]
-        ];
+        [array[i], array[j]] =
+        [array[j], array[i]];
 
     }
-
 }
 
 
-/* =====================================================
+/* ==========================================
    FLIP CARD
-===================================================== */
+========================================== */
 
 function flipCard(card) {
 
-    if (lockBoard)
+    if (locked)
         return;
 
     if (card === firstCard)
         return;
 
-    if (
-        card.classList.contains(
-            "matched"
-        )
-    )
+    if (card.classList.contains("matched"))
         return;
 
-
     /*
-       Start timer
+       Start timer on first card
     */
 
-    if (!gameStarted) {
-
-        gameStarted = true;
-
-        timerInterval =
-            setInterval(() => {
-
-                seconds++;
-
-                updateStats();
-
-            }, 1000);
-
+    if (
+        moves === 0 &&
+        firstCard === null
+    ) {
+        startTimer();
     }
-
 
     card.classList.add("flipped");
 
     playSound("flip");
 
 
-    /*
-       First card
-    */
-
-    if (!firstCard) {
+    if (firstCard === null) {
 
         firstCard = card;
 
         return;
-
     }
 
-
-    /*
-       Second card
-    */
 
     secondCard = card;
 
@@ -1291,147 +716,114 @@ function flipCard(card) {
 
     updateStats();
 
-    checkMatch();
-
+    checkCards();
 }
 
 
-/* =====================================================
-   CHECK MATCH
-===================================================== */
+/* ==========================================
+   CHECK CARDS
+========================================== */
 
-function checkMatch() {
+function checkCards() {
 
     const match =
-        firstCard.dataset.symbol
+        firstCard.dataset.value
         ===
-        secondCard.dataset.symbol;
+        secondCard.dataset.value;
 
 
     if (match) {
 
-        playSound("match");
-
-        firstCard.classList.add(
-            "matched"
-        );
-
-        secondCard.classList.add(
-            "matched"
-        );
-
-        firstCard.classList.add(
-            "disabled"
-        );
-
-        secondCard.classList.add(
-            "disabled"
-        );
-
+        firstCard.classList.add("matched");
+        secondCard.classList.add("matched");
 
         matches++;
 
+        playSound("match");
+
+        resetSelection();
 
         updateStats();
 
-
-        resetBoard();
-
-
-        /*
-           Game completed
-        */
 
         const totalPairs =
             (level * level) / 2;
 
 
-        if (
-            matches === totalPairs
-        ) {
+        if (matches === totalPairs) {
 
             finishGame();
-
         }
 
-    }
+    } else {
 
-    else {
+        locked = true;
 
         playSound("wrong");
 
-        lockBoard = true;
 
-        firstCard.classList.add(
-            "wrong"
-        );
+        setTimeout(function() {
 
-        secondCard.classList.add(
-            "wrong"
-        );
+            firstCard.classList.remove("flipped");
+            secondCard.classList.remove("flipped");
 
+            resetSelection();
 
-        setTimeout(() => {
-
-            firstCard.classList.remove(
-                "flipped",
-                "wrong"
-            );
-
-            secondCard.classList.remove(
-                "flipped",
-                "wrong"
-            );
-
-            resetBoard();
-
-        }, 850);
-
+        }, 800);
     }
-
 }
 
 
-/* =====================================================
-   RESET BOARD
-===================================================== */
+/* ==========================================
+   RESET CARD SELECTION
+========================================== */
 
-function resetBoard() {
+function resetSelection() {
 
     firstCard = null;
-
     secondCard = null;
 
-    lockBoard = false;
-
+    locked = false;
 }
 
 
-/* =====================================================
-   STATS
-===================================================== */
+/* ==========================================
+   TIMER
+========================================== */
+
+function startTimer() {
+
+    clearInterval(timer);
+
+    timer = setInterval(function() {
+
+        seconds++;
+
+        updateStats();
+
+    }, 1000);
+}
+
+
+/* ==========================================
+   UPDATE STATS
+========================================== */
 
 function updateStats() {
 
-    document.getElementById(
-        "moves"
-    ).textContent = moves;
+    document.getElementById("moves")
+        .textContent = moves;
 
-
-    document.getElementById(
-        "matches"
-    ).textContent =
+    document.getElementById("matches")
+        .textContent =
         `${matches}/${(level * level) / 2}`;
 
-
-    document.getElementById(
-        "timer"
-    ).textContent =
+    document.getElementById("time")
+        .textContent =
         formatTime(seconds);
 
 
     let accuracy = 100;
-
 
     if (moves > 0) {
 
@@ -1439,277 +831,185 @@ function updateStats() {
             Math.round(
                 (matches / moves) * 100
             );
-
     }
 
-
-    document.getElementById(
-        "accuracy"
-    ).textContent =
+    document.getElementById("accuracy")
+        .textContent =
         accuracy + "%";
-
 }
 
 
-/* =====================================================
+/* ==========================================
    FORMAT TIME
-===================================================== */
+========================================== */
 
-function formatTime(totalSeconds) {
+function formatTime(value) {
 
     const minutes =
-        Math.floor(
-            totalSeconds / 60
-        )
+        Math.floor(value / 60)
         .toString()
         .padStart(2, "0");
 
-
-    const secondsPart =
-        (totalSeconds % 60)
+    const secs =
+        (value % 60)
         .toString()
         .padStart(2, "0");
 
-
-    return `${minutes}:${secondsPart}`;
-
+    return `${minutes}:${secs}`;
 }
 
 
-/* =====================================================
+/* ==========================================
    FINISH GAME
-===================================================== */
+========================================== */
 
 function finishGame() {
 
-    clearInterval(timerInterval);
+    clearInterval(timer);
 
+    const nameInput =
+        document.getElementById("playerName");
 
-    gameStarted = false;
+    let player =
+        nameInput.value.trim();
 
-
-    playSound("win");
-
-
-    const playerInput =
-        document.getElementById(
-            "playerName"
-        );
-
-
-    let playerName =
-        playerInput.value.trim();
-
-
-    if (!playerName) {
-
-        playerName = "Player";
-
+    if (!player) {
+        player = "Player";
     }
 
 
+    const accuracy =
+        moves === 0
+        ? 100
+        : Math.round(
+            (matches / moves) * 100
+        );
+
+
     /*
-       Calculate score
+       Score
     */
 
-    const score =
-        calculateScore();
+    let base;
+
+    if (level === 4) {
+        base = 1000;
+    } else if (level === 6) {
+        base = 2500;
+    } else {
+        base = 6000;
+    }
+
+
+    let score =
+        base
+        + accuracy * 10
+        - seconds * 5
+        - moves * 10;
+
+
+    score =
+        Math.max(
+            100,
+            Math.round(score)
+        );
 
 
     /*
-       Save score
+       Save
     */
 
-    saveScore({
-
-        player: playerName,
-
-        level:
-            `${level}×${level}`,
-
-        moves: moves,
-
-        time: seconds,
-
-        score: score,
-
-        date:
-            new Date().toISOString()
-
-    });
+    saveScore(
+        player,
+        level,
+        moves,
+        seconds,
+        score
+    );
 
 
     /*
        Show result
     */
 
-    document.getElementById(
-        "result"
-    ).innerHTML = `
+    document.getElementById("result")
+        .innerHTML = `
 
-        <strong>${escapeHtml(playerName)}</strong>
+            <p>Player:
+                <strong>${escapeHTML(player)}</strong>
+            </p>
 
-        <br>
+            <p>Level:
+                <strong>${level} × ${level}</strong>
+            </p>
 
-        Level:
-        <strong>${level}×${level}</strong>
+            <p>Moves:
+                <strong>${moves}</strong>
+            </p>
 
-        <br>
+            <p>Time:
+                <strong>${formatTime(seconds)}</strong>
+            </p>
 
-        Moves:
-        <strong>${moves}</strong>
+            <p>Accuracy:
+                <strong>${accuracy}%</strong>
+            </p>
 
-        <br>
+            <h3>Score: ${score}</h3>
 
-        Time:
-        <strong>${formatTime(seconds)}</strong>
-
-        <br>
-
-        Accuracy:
-        <strong>${calculateAccuracy()}%</strong>
-
-        <br>
-
-        Score:
-        <strong>${score}</strong>
-
-    `;
+        `;
 
 
-    document.getElementById(
-        "victoryModal"
-    ).classList.add("show");
+    document.getElementById("modal")
+        .classList.add("show");
 
 
-    createConfetti();
+    document.getElementById("message")
+        .textContent =
+        "🎉 Game completed!";
 
 
-    displayScores();
+    playSound("win");
 
+    showScores();
 }
 
 
-/* =====================================================
-   SCORE CALCULATION
-===================================================== */
-
-function calculateScore() {
-
-    const totalPairs =
-        (level * level) / 2;
-
-
-    /*
-       Base score increases
-       significantly for harder levels.
-    */
-
-    let baseScore;
-
-    if (level === 4)
-        baseScore = 1000;
-
-    else if (level === 6)
-        baseScore = 2500;
-
-    else
-        baseScore = 6000;
-
-
-    /*
-       Accuracy bonus
-    */
-
-    const accuracy =
-        calculateAccuracy();
-
-
-    const accuracyBonus =
-        Math.round(
-            accuracy * 10
-        );
-
-
-    /*
-       Time penalty
-    */
-
-    const timePenalty =
-        seconds * 5;
-
-
-    /*
-       Move penalty
-    */
-
-    const idealMoves =
-        totalPairs;
-
-
-    const extraMoves =
-        Math.max(
-            0,
-            moves - idealMoves
-        );
-
-
-    const movePenalty =
-        extraMoves * 20;
-
-
-    let score =
-        baseScore
-        + accuracyBonus
-        - timePenalty
-        - movePenalty;
-
-
-    return Math.max(
-        100,
-        Math.round(score)
-    );
-
-}
-
-
-/* =====================================================
-   ACCURACY
-===================================================== */
-
-function calculateAccuracy() {
-
-    if (moves === 0)
-        return 100;
-
-
-    return Math.round(
-        (matches / moves) * 100
-    );
-
-}
-
-
-/* =====================================================
+/* ==========================================
    LOCAL STORAGE
-===================================================== */
+========================================== */
 
-function saveScore(scoreData) {
+function saveScore(
+    player,
+    gameLevel,
+    gameMoves,
+    gameTime,
+    gameScore
+) {
 
     let scores =
         JSON.parse(
             localStorage.getItem(
-                "memoryMasterScores"
+                "memoryGameScores"
             )
         ) || [];
 
 
-    scores.push(scoreData);
+    scores.push({
 
+        player: player,
 
-    /*
-       Sort highest score first
-    */
+        level:
+            `${gameLevel}×${gameLevel}`,
+
+        moves: gameMoves,
+
+        time: gameTime,
+
+        score: gameScore
+
+    });
+
 
     scores.sort(
         (a, b) =>
@@ -1726,29 +1026,25 @@ function saveScore(scoreData) {
 
 
     localStorage.setItem(
-        "memoryMasterScores",
+        "memoryGameScores",
         JSON.stringify(scores)
     );
-
 }
 
 
-/* =====================================================
-   DISPLAY HIGH SCORES
-===================================================== */
+/* ==========================================
+   SHOW SCORES
+========================================== */
 
-function displayScores() {
+function showScores() {
 
     const table =
-        document.getElementById(
-            "scoreTable"
-        );
-
+        document.getElementById("scores");
 
     const scores =
         JSON.parse(
             localStorage.getItem(
-                "memoryMasterScores"
+                "memoryGameScores"
             )
         ) || [];
 
@@ -1756,36 +1052,34 @@ function displayScores() {
     if (scores.length === 0) {
 
         table.innerHTML = `
-
             <tr>
-                <td
-                    colspan="6"
-                    class="empty"
-                >
-                    No scores yet.
-                    Complete a game!
+                <td colspan="6">
+                    No scores yet
                 </td>
             </tr>
-
         `;
 
         return;
-
     }
 
 
-    table.innerHTML =
-        scores.map(
-            (score, index) => `
+    table.innerHTML = "";
 
-            <tr>
+
+    scores.forEach(
+        (score, index) => {
+
+            const row =
+                document.createElement("tr");
+
+            row.innerHTML = `
 
                 <td>
-                    ${getRank(index + 1)}
+                    ${index + 1}
                 </td>
 
                 <td>
-                    ${escapeHtml(score.player)}
+                    ${escapeHTML(score.player)}
                 </td>
 
                 <td>
@@ -1806,151 +1100,153 @@ function displayScores() {
                     </strong>
                 </td>
 
-            </tr>
+            `;
 
-        `
-        ).join("");
-
-}
-
-
-/* =====================================================
-   RANK
-===================================================== */
-
-function getRank(rank) {
-
-    if (rank === 1)
-        return "🥇";
-
-    if (rank === 2)
-        return "🥈";
-
-    if (rank === 3)
-        return "🥉";
-
-    return rank;
-
-}
-
-
-/* =====================================================
-   CLOSE MODAL
-===================================================== */
-
-function closeModal() {
-
-    document.getElementById(
-        "victoryModal"
-    ).classList.remove("show");
-
-}
-
-
-/* =====================================================
-   CONFETTI
-===================================================== */
-
-function createConfetti() {
-
-    const count = 100;
-
-
-    for (
-        let i = 0;
-        i < count;
-        i++
-    ) {
-
-        const piece =
-            document.createElement(
-                "div"
-            );
-
-
-        piece.className =
-            "confetti";
-
-
-        piece.style.left =
-            Math.random() * 100 + "vw";
-
-
-        piece.style.background =
-            `hsl(
-                ${Math.random() * 360},
-                80%,
-                60%
-            )`;
-
-
-        piece.style.animationDuration =
-            (2 + Math.random() * 3)
-            + "s";
-
-
-        piece.style.animationDelay =
-            Math.random() * 0.5
-            + "s";
-
-
-        document.body.appendChild(
-            piece
-        );
-
-
-        setTimeout(() => {
-
-            piece.remove();
-
-        }, 5500);
-
-    }
-
-}
-
-
-/* =====================================================
-   HTML ESCAPE
-===================================================== */
-
-function escapeHtml(text) {
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-    div.textContent = text;
-
-    return div.innerHTML;
-
-}
-
-
-/* =====================================================
-   INITIALIZATION
-===================================================== */
-
-document
-    .getElementById("playerName")
-    .addEventListener(
-        "keydown",
-        function(event) {
-
-            if (
-                event.key === "Enter"
-            ) {
-
-                startGame();
-
-            }
+            table.appendChild(row);
 
         }
     );
+}
 
 
-displayScores();
+/* ==========================================
+   SOUND
+========================================== */
+
+function playSound(type) {
+
+    if (!soundOn)
+        return;
+
+
+    if (!audio) {
+
+        audio =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
+    }
+
+
+    const oscillator =
+        audio.createOscillator();
+
+    const gain =
+        audio.createGain();
+
+
+    oscillator.connect(gain);
+    gain.connect(audio.destination);
+
+
+    let frequency = 400;
+    let duration = 0.1;
+
+
+    if (type === "flip") {
+
+        frequency = 500;
+        duration = 0.06;
+
+    }
+
+    if (type === "match") {
+
+        frequency = 800;
+        duration = 0.15;
+
+    }
+
+    if (type === "wrong") {
+
+        frequency = 180;
+        duration = 0.15;
+
+    }
+
+    if (type === "win") {
+
+        frequency = 1000;
+        duration = 0.5;
+
+    }
+
+
+    oscillator.frequency.value =
+        frequency;
+
+    oscillator.type = "sine";
+
+
+    gain.gain.setValueAtTime(
+        0.15,
+        audio.currentTime
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        0.001,
+        audio.currentTime + duration
+    );
+
+
+    oscillator.start();
+
+    oscillator.stop(
+        audio.currentTime + duration
+    );
+}
+
+
+/* ==========================================
+   SOUND BUTTON
+========================================== */
+
+function toggleSound() {
+
+    soundOn = !soundOn;
+
+    document.getElementById(
+        "soundButton"
+    ).textContent =
+        soundOn
+        ? "🔊 Sound ON"
+        : "🔇 Sound OFF";
+}
+
+
+/* ==========================================
+   MODAL
+========================================== */
+
+function closeModal() {
+
+    document.getElementById("modal")
+        .classList.remove("show");
+}
+
+
+/* ==========================================
+   SECURITY
+========================================== */
+
+function escapeHTML(value) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent = value;
+
+    return div.innerHTML;
+}
+
+
+/* ==========================================
+   INITIALIZE
+========================================== */
+
+showScores();
 
 startGame();
 
